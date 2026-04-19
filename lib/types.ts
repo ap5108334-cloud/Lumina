@@ -87,11 +87,11 @@ export type AlertPriority = "low" | "medium" | "high" | "urgent";
 export interface Alert {
   id: string;
   title: string;
-  message: string;
+  message?: string; 
   source: AlertSource;
   priority: AlertPriority;
   read: boolean;
-  timestamp: string;
+  createdAt: string; 
   link?: string;
   category?: string;
 }

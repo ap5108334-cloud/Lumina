@@ -16,7 +16,7 @@ function seedAlerts(): Alert[] {
       source: "moodle",
       priority: "high",
       read: false,
-      timestamp: new Date(now.getTime() - 1 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 1 * 60 * 60 * 1000).toISOString(),
       category: "Assignment",
     },
     {
@@ -26,7 +26,7 @@ function seedAlerts(): Alert[] {
       source: "moodle",
       priority: "medium",
       read: false,
-      timestamp: new Date(now.getTime() - 3 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 3 * 60 * 60 * 1000).toISOString(),
       category: "Course Material",
     },
     {
@@ -36,7 +36,7 @@ function seedAlerts(): Alert[] {
       source: "email",
       priority: "urgent",
       read: false,
-      timestamp: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(),
       category: "Examination",
     },
     {
@@ -46,7 +46,7 @@ function seedAlerts(): Alert[] {
       source: "email",
       priority: "medium",
       read: true,
-      timestamp: new Date(now.getTime() - 8 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 8 * 60 * 60 * 1000).toISOString(),
       category: "Library",
     },
     {
@@ -56,7 +56,7 @@ function seedAlerts(): Alert[] {
       source: "moodle",
       priority: "low",
       read: true,
-      timestamp: new Date(now.getTime() - 12 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 12 * 60 * 60 * 1000).toISOString(),
       category: "Grades",
     },
     {
@@ -66,7 +66,7 @@ function seedAlerts(): Alert[] {
       source: "email",
       priority: "medium",
       read: false,
-      timestamp: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString(),
       category: "Event",
     },
     {
@@ -76,7 +76,7 @@ function seedAlerts(): Alert[] {
       source: "moodle",
       priority: "medium",
       read: false,
-      timestamp: new Date(now.getTime() - 30 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 30 * 60 * 60 * 1000).toISOString(),
       category: "Discussion",
     },
     {
@@ -86,7 +86,7 @@ function seedAlerts(): Alert[] {
       source: "system",
       priority: "urgent",
       read: false,
-      timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
+      createdAt: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(),
       category: "Attendance",
     },
   ];
@@ -99,8 +99,8 @@ export async function GET() {
   if (alerts.length === 0) {
     alerts = seedAlerts();
   }
-  // Sort by timestamp desc
-  alerts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  // Sort by createdAt desc
+  alerts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   return NextResponse.json(alerts);
 }
 
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     source: body.source || "system",
     priority: body.priority || "medium",
     read: false,
-    timestamp: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
     link: body.link,
     category: body.category,
   };

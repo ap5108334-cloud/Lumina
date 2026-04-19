@@ -312,7 +312,7 @@ export default function Dashboard() {
                         )}
                         <span className="text-[10px] text-muted-foreground/50 flex items-center gap-1 ml-auto">
                           <Clock className="w-2.5 h-2.5" />
-                          {formatDistanceToNow(new Date(alert.timestamp), { addSuffix: true })}
+                          {formatDistanceToNow(new Date(alert.createdAt), { addSuffix: true })}
                         </span>
                       </div>
                     </div>

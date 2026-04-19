@@ -204,7 +204,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                         </div>
                         <div>
                           <p className={`text-sm ${alert.read ? 'text-muted-foreground' : 'text-foreground font-semibold'}`}>{alert.title}</p>
-                          <p className="text-[11px] text-muted-foreground line-clamp-1 mt-0.5">{alert.content || "No detailed content."}</p>
+                          <p className="text-[11px] text-muted-foreground line-clamp-1 mt-0.5">{alert.message || "No detailed content."}</p>
                           <p className="text-[10px] text-muted-foreground/60 mt-1 uppercase">
                             {alert.createdAt && !isNaN(new Date(alert.createdAt).getTime()) 
                               ? formatDistanceToNow(new Date(alert.createdAt)) + " ago" 

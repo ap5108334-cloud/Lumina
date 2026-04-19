@@ -55,14 +55,14 @@ export default function CalendarPage() {
   // Convert alerts with deadlines into calendar-displayable items
   const alertEvents = useMemo(() => {
     return alerts
-      .filter((a) => a.timestamp)
+      .filter((a) => a.createdAt)
       .map((a) => ({
         id: `alert-${a.id}`,
         title: a.title,
-        date: a.timestamp.split("T")[0],
+        date: a.createdAt.split("T")[0],
         type: "reminder" as const,
         color: a.source === "moodle" ? "#f97316" : a.source === "email" ? "#3b82f6" : "#7c3aed",
-        description: `[${a.source.toUpperCase()}] ${a.message}`,
+        description: `[${a.source.toUpperCase()}] ${a.message || ""}`,
         source: a.source,
       }));
   }, [alerts]);
@@ -114,7 +114,7 @@ export default function CalendarPage() {
     // Pull unread alerts that look like deadlines and add them as calendar events
     const deadlineKeywords = ["deadline", "due", "submit", "assignment", "exam", "quiz", "test", "review", "presentation", "project"];
     const relevantAlerts = alerts.filter((a) => {
-      const text = (a.title + " " + a.message).toLowerCase();
+      const text = (a.title + " " + (a.message || "")).toLowerCase();
       return (a.source === "moodle" || a.source === "email") && deadlineKeywords.some((kw) => text.includes(kw));
     });
     
@@ -125,8 +125,8 @@ export default function CalendarPage() {
       if (alreadyExists) continue;
       
       // Use alert timestamp or offset from today for the deadline
-      const deadlineDate = alert.timestamp
-        ? alert.timestamp.split("T")[0]
+      const deadlineDate = alert.createdAt
+       ? alert.createdAt.split("T")[0]
         : format(addDays(new Date(), 3), "yyyy-MM-dd");
       
       await addEvent({
@@ -134,7 +134,7 @@ export default function CalendarPage() {
         date: deadlineDate,
         type: "task",
         color: alert.source === "moodle" ? "#f97316" : "#3b82f6",
-        description: `[${alert.source.toUpperCase()}] ${alert.message}`,
+        description: `[${alert.source.toUpperCase()}] ${alert.message || ""}`,
       });
       added++;
     }
